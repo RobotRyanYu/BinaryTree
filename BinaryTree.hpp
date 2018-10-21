@@ -16,14 +16,16 @@ template<typename T>
 class BinaryTree {
 private:
 	node<T> *root;
-	void insert(T value, node<T> *leaf);
-	node<T>* search(T value, node<T> *leaf);
+	void Insert(T value, node<T> *leaf);
+	node<T>* Search(T value, node<T> *leaf);
+	void DestroyNode(node<T>* leaf);
 public:
 
 	BinaryTree();
-
-	void insert(T value);
-	node<T>* search(T value);
+	~BinaryTree();
+	void Insert(T value);
+	node<T>* Search(T value);
+	void DestroyAll();
 };
 
 template<typename T>
@@ -32,7 +34,12 @@ BinaryTree<T>::BinaryTree() {
 };
 
 template<typename T>
-void BinaryTree<T>::insert(T value, node<T> *leaf) {
+BinaryTree<T>::~BinaryTree() {
+	DestroyAll();
+}
+
+template<typename T>
+void BinaryTree<T>::Insert(T value, node<T> *leaf) {
 
 	if (value < leaf->value) {
 		if (leaf->left_child == NULL) {
@@ -40,7 +47,7 @@ void BinaryTree<T>::insert(T value, node<T> *leaf) {
 			leaf->left_child->value = value;
 		}
 		else
-			insert(value, leaf->left_child);
+			Insert(value, leaf->left_child);
 	}
 	else if (value >= leaf->value) {
 		if (leaf->right_child == NULL) {
@@ -48,14 +55,14 @@ void BinaryTree<T>::insert(T value, node<T> *leaf) {
 			leaf->right_child->value = value;
 		}
 		else
-			insert(value, leaf->right_child);
+			Insert(value, leaf->right_child);
 	}
 
 	return;
 }
 
 template<typename T>
-void BinaryTree<T>::insert(T value) {
+void BinaryTree<T>::Insert(T value) {
 
 	if (root == NULL) {
 		root = new node<T>;
@@ -68,7 +75,7 @@ void BinaryTree<T>::insert(T value) {
 				root->left_child->value = value;
 			}
 			else
-				insert(value, root->left_child);
+				Insert(value, root->left_child);
 		}
 		else if (value >= root->value) {
 			if (root->right_child == NULL) {
@@ -76,7 +83,7 @@ void BinaryTree<T>::insert(T value) {
 				root->right_child->value = value;
 			}
 			else
-				insert(value, root->right_child);
+				Insert(value, root->right_child);
 		}
 	}
 
@@ -84,7 +91,7 @@ void BinaryTree<T>::insert(T value) {
 }
 
 template<typename T>
-node<T>* BinaryTree<T>::search(T value, node<T>* leaf) {
+node<T>* BinaryTree<T>::Search(T value, node<T>* leaf) {
 	node<T>* result = NULL;
 
 	if (leaf == NULL)
@@ -94,10 +101,10 @@ node<T>* BinaryTree<T>::search(T value, node<T>* leaf) {
 			return leaf;
 		else {
 			if (value >= leaf->value) {
-				result = search(value, leaf->right_child);
+				result = Search(value, leaf->right_child);
 			}
 			else if (value < leaf->value) {
-				result = search(value, leaf->left_child);
+				result = Search(value, leaf->left_child);
 			}
 		}
 	}
@@ -105,10 +112,8 @@ node<T>* BinaryTree<T>::search(T value, node<T>* leaf) {
 	return result;
 }
 
-
-
 template<typename T>
-node<T>* BinaryTree<T>::search(T value) {
+node<T>* BinaryTree<T>::Search(T value) {
 
 	node<T>* result = NULL;
 
@@ -119,10 +124,10 @@ node<T>* BinaryTree<T>::search(T value) {
 			return root;
 		else {
 			if (value >= root->value) {
-				result = search(value, root->right_child);
+				result = Search(value, root->right_child);
 			}
 			else if (value < root->value) {
-				result = search(value, root->left_child);
+				result = Search(value, root->left_child);
 			}
 		}
 	}
@@ -130,3 +135,26 @@ node<T>* BinaryTree<T>::search(T value) {
 	return result;
 }
 
+template<typename T>
+void BinaryTree<T>::DestroyAll() {
+
+	if (root == NULL)
+		return;
+	else {
+		DestroyNode(root);
+	}
+
+	return;
+}
+
+template<typename T>
+void BinaryTree<T>::DestroyNode(node<T> *leaf) {
+	
+	if (leaf != NULL){
+		DestroyNode(leaf->left_child);
+		DestroyNode(leaf->right_child);
+		delete leaf;
+	}
+
+	return;
+}

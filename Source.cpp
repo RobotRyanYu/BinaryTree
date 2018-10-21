@@ -8,13 +8,15 @@ int main() {
 
 	BinaryTree<double> btree;
 
-	btree.insert(10);
-	btree.insert(5);
-	btree.insert(2);
-	btree.insert(7);
+	btree.Insert(10);
+	btree.Insert(5);
+	btree.Insert(2);
+	btree.Insert(7);
 
-	node<double>* result = btree.search(2);
+	node<double>* result = btree.Search(2);
 	std::cout << result->value << std::endl;
+
+	btree.DestroyAll();
 
 	return 0;
 }
