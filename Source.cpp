@@ -16,6 +16,8 @@ int main() {
 	node<double>* result = btree.Search(2);
 	std::cout << result->value << std::endl;
 
+	btree.InOrderTraverse();
+
 	btree.DestroyAll();
 
 	return 0;

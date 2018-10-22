@@ -1,4 +1,6 @@
 #pragma once
+#include<vector>
+
 template<typename T>
 struct node {
 
@@ -26,6 +28,7 @@ public:
 	void Insert(T value);
 	node<T>* Search(T value);
 	void DestroyAll();
+	void InOrderTraverse();
 };
 
 template<typename T>
@@ -142,6 +145,7 @@ void BinaryTree<T>::DestroyAll() {
 		return;
 	else {
 		DestroyNode(root);
+		root = NULL;
 	}
 
 	return;
@@ -155,6 +159,35 @@ void BinaryTree<T>::DestroyNode(node<T> *leaf) {
 		DestroyNode(leaf->right_child);
 		delete leaf;
 	}
+
+	return;
+}
+
+template<typename T>
+void BinaryTree<T>::InOrderTraverse() {
+
+	std::vector<node<T>*> queue;
+	if (root != NULL) {
+		int head = 0, tail = 0;
+		queue.push_back(root);
+		do {
+			if (queue[head]->left_child != NULL) {
+				queue.push_back(queue[head]->left_child);
+				tail++;
+			}
+			if (queue[head]->right_child != NULL) {
+				queue.push_back(queue[head]->right_child);
+				tail++;
+			}
+
+			head++;
+		} while (head <= tail);
+	}
+
+	for (int i = 0; i < queue.size(); i++) {
+		std::cout << queue[i]->value << std::endl;
+	}
+
 
 	return;
 }
