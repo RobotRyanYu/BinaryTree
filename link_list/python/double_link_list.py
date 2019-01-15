@@ -12,35 +12,28 @@ class DoubleLinkList:
         self.num_of_node = 0
         
     def PushBack(self, val):
+        new_node = Node()
+        new_node.val = val
         if self.head == None:
-            self.head = Node()
-            self.tail = Node()
-            self.head.val = val
+            self.head = new_node
             self.tail = self.head
         elif self.head.next == None:
-            new_node = Node()
-            new_node.val = val
             new_node.parent = self.head
-
             self.tail = new_node
             self.head.next = self.tail
         else:
-            new_node = Node()
-            new_node.val = val
             new_node.parent = self.tail
-
             self.tail.next = new_node
             self.tail = new_node
         
         self.num_of_node += 1
 
     def PushFront(self, value):
+        new_node = Node()
+        new_node.val = value
         if self.head == None:
-            head = Node()
-            head.val = value
+            head = new_node
         else:
-            new_node = Node()
-            new_node.val = value
             new_node.next = self.head
             self.head = new_node
         self.num_of_node += 1
