@@ -112,10 +112,12 @@ class DoubleLinkList:
             return None
 
         self.cur = self.head   
-        if (index > 0):
-            while self.cur.next != None:
-                self.cur = self.cur.next
         
+        if (index > 0):
+            idx = 0
+            while idx != index:
+                self.cur = self.cur.next
+                idx += 1
         return self.cur
 
     def PrintLinkList(self):
@@ -131,15 +133,26 @@ class DoubleLinkList:
         self.cur = None
         self.num_of_node = 0
 
+    def AddLink(self, link):
+        if (self.tail != None):
+            link_node = link.head
+            while(link_node != None):
+                self.PushBack(link_node.val)
+                link_node = link_node.next
+
 def main():
 
     link_list = DoubleLinkList()
+    link_list2 = DoubleLinkList()
 
     link_list.PushBack(1)
     link_list.PushBack(2)
     link_list.PushBack(3)
     link_list.PushBack(4)
     link_list.PushBack(5)
+    link_list.PushBack(6)
+    link_list.PushBack(7)
+    link_list.PushBack(8)
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
 
@@ -153,7 +166,7 @@ def main():
     print("")
 
     link_list.PushFront(1)
-    link_list.PushBack(5)
+    link_list.PushBack(8)
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
 
@@ -174,6 +187,10 @@ def main():
     link_list.PushNode(0, 0)
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
+
+    node = link_list.FindNode(5)
+    if (node != None):
+        print("result node: ", node.val)
 
     link_list.DeleteLink()
     link_list.PrintLinkList()

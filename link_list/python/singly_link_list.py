@@ -136,6 +136,19 @@ class SinglyLinkList:
                 self.PushBack(link_node.val)
                 link_node = link_node.next
 
+    def InvertLink(self):
+        self.cur  = self.head
+        last_node = None
+        while(self.cur != None):
+            last_last_node = last_node
+            last_node = self.cur
+            self.cur = self.cur.next 
+            last_node.next = last_last_node       
+        
+        temp_node = self.head
+        self.head = last_node
+        self.tail = temp_node
+
 def main():
 
     link_list  = SinglyLinkList()
@@ -152,6 +165,12 @@ def main():
     link_list2.PushBack(8)
 
     link_list.AddLink(link_list2)
+    link_list.PrintLinkList()
+    print("num of node: ", link_list.num_of_node)
+
+    print("")
+
+    link_list.InvertLink()
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
 
