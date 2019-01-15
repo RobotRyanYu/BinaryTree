@@ -140,9 +140,24 @@ class DoubleLinkList:
                 self.PushBack(link_node.val)
                 link_node = link_node.next
 
+    def InvertLink(self):
+        self.cur  = self.head
+        last_node = None
+        while(self.cur != None):
+            temp_node1 = self.cur.parent
+            self.cur.parent = self.cur.next
+            last_node = self.cur
+            self.cur = self.cur.next
+            last_node.next = temp_node1 
+                  
+        temp_node = self.head
+        self.head = last_node
+        self.tail = temp_node
+             
+
 def main():
 
-    link_list = DoubleLinkList()
+    link_list  = DoubleLinkList()
     link_list2 = DoubleLinkList()
 
     link_list.PushBack(1)
@@ -157,6 +172,14 @@ def main():
     print("num of node: ", link_list.num_of_node)
 
     print("")
+
+
+    link_list.InvertLink()
+    link_list.PrintLinkList()
+    print("num of node: ", link_list.num_of_node)
+
+    print("")
+
 
     link_list.PopFront()
     link_list.PopBack()
