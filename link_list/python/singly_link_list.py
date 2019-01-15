@@ -9,7 +9,7 @@ class SinglyLinkList:
         self.tail = None
         self.cur = None
         self.num_of_node = 0
-        
+            
     def PushBack(self, val):
         new_node = Node()
         new_node.val = val
@@ -99,8 +99,7 @@ class SinglyLinkList:
                 self.cur = self.cur.next
             node = self.cur
             last_node.next = self.cur.next
-
-        self.num_of_node -= 1
+            self.num_of_node -= 1
 
         return node
         
@@ -110,9 +109,10 @@ class SinglyLinkList:
 
         self.cur = self.head   
         if (index > 0):
-            while self.cur.next != None:
+            idx = 0
+            while idx != index:
                 self.cur = self.cur.next
-        
+                idx += 1
         return self.cur
 
     def PrintLinkList(self):
@@ -128,15 +128,30 @@ class SinglyLinkList:
         self.cur = None
         self.num_of_node = 0
 
+    def AddLink(self, link):
+        if (self.tail != None):
+            self.cur = self.tail
+            link_node = link.head
+            while(link_node != None):
+                self.PushBack(link_node.val)
+                link_node = link_node.next
+
 def main():
 
-    link_list = SinglyLinkList()
+    link_list  = SinglyLinkList()
+    link_list2 = SinglyLinkList()
 
     link_list.PushBack(1)
     link_list.PushBack(2)
     link_list.PushBack(3)
     link_list.PushBack(4)
     link_list.PushBack(5)
+
+    link_list2.PushBack(6)
+    link_list2.PushBack(7)
+    link_list2.PushBack(8)
+
+    link_list.AddLink(link_list2)
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
 
@@ -150,7 +165,7 @@ def main():
     print("")
 
     link_list.PushFront(1)
-    link_list.PushBack(5)
+    link_list.PushBack(8)
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
 
@@ -173,6 +188,10 @@ def main():
     print("num of node: ", link_list.num_of_node)
 
     print("")
+
+    node = link_list.FindNode(5)
+    if (node != None):
+        print("result node: ", node.val)
 
     link_list.DeleteLink()
     link_list.PrintLinkList()
