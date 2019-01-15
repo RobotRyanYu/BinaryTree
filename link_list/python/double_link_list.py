@@ -58,16 +58,32 @@ class DoubleLinkList:
         self.num_of_node += 1
     
     def PopFront(self):
+        if (self.num_of_node == 0):
+            self.head = None 
+            self.tail = None
+            return None
+
         node = self.head
         self.head = self.head.next
+
+        if (self.head == None):
+            self.tail = self.head
+
         self.num_of_node -= 1
         return node    
              
     def PopBack(self):
+        if (self.num_of_node == 0):
+            self.head = None 
+            self.tail = None
+            return None
+
         node = self.tail.parent
         node.next = None
         self.tail = node
+
         self.num_of_node -= 1
+
         return node     
     
     def PopNode(self, index):
@@ -76,9 +92,9 @@ class DoubleLinkList:
 
         node = None
         if index == 0:
-            PopFront()
+            node = self.PopFront()
         elif index == self.num_of_node - 1:
-            PopBack()
+            node = self.PopBack()
         else:
             self.cur = self.head
             for i in range(index):
@@ -86,6 +102,7 @@ class DoubleLinkList:
             node = self.cur
             self.cur.parent.next = self.cur.next
             self.cur.next.parent = self.cur.parent.next
+        
         self.num_of_node -= 1
 
         return node
@@ -154,11 +171,9 @@ def main():
 
     print("")
 
-    link_list.PushNode(0, 2)
+    link_list.PushNode(0, 0)
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
-
-    print("")
 
     link_list.DeleteLink()
     link_list.PrintLinkList()

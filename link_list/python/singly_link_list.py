@@ -3,7 +3,7 @@ class Node:
         self.val = 0
         self.next = None
 
-class DoubleLinkList:
+class SinglyLinkList:
     def __init__(self):
         self.head = None
         self.tail = None
@@ -23,7 +23,6 @@ class DoubleLinkList:
         else:
             self.tail.next = new_node
             self.tail = new_node
-        
         self.num_of_node += 1
 
     def PushFront(self, value):
@@ -44,27 +43,42 @@ class DoubleLinkList:
         new_node.val = value
         if (index == 0):
             new_node.next = self.head
-            new_node.parent = None
             self.head = new_node
         else:
             self.cur = self.head        
             for i in range(index - 1):
                 self.cur = self.cur.next
             new_node.next = self.cur.next
-            new_node.parent = self.cur
             self.cur.next = new_node    
         self.num_of_node += 1
     
     def PopFront(self):
+        if (self.num_of_node == 0):
+            self.head = None
+            self.tail = None
+            return None
         node = self.head
         self.head = self.head.next
         self.num_of_node -= 1
         return node    
              
     def PopBack(self):
-        node = self.tail.parent
-        node.next = None
-        self.tail = node
+        if (self.num_of_node == 0):
+            self.head = None
+            self.tail = None
+            return None
+        
+        self.cur = self.head
+        last_node = self.cur
+        while(self.cur.next != None):
+            last_node = self.cur
+            self.cur = self.cur.next
+
+        node = self.tail
+
+        last_node.next = None
+        self.tail = last_node
+
         self.num_of_node -= 1
         return node     
     
@@ -74,16 +88,18 @@ class DoubleLinkList:
 
         node = None
         if index == 0:
-            PopFront()
+            node = self.PopFront()
         elif index == self.num_of_node - 1:
-            PopBack()
+            node = self.PopBack()
         else:
             self.cur = self.head
+            last_node = self.cur
             for i in range(index):
+                last_node = self.cur
                 self.cur = self.cur.next
             node = self.cur
-            self.cur.parent.next = self.cur.next
-            self.cur.next.parent = self.cur.parent.next
+            last_node.next = self.cur.next
+
         self.num_of_node -= 1
 
         return node
@@ -114,7 +130,7 @@ class DoubleLinkList:
 
 def main():
 
-    link_list = DoubleLinkList()
+    link_list = SinglyLinkList()
 
     link_list.PushBack(1)
     link_list.PushBack(2)
@@ -152,7 +168,7 @@ def main():
 
     print("")
 
-    link_list.PushNode(0, 2)
+    link_list.PushNode(0, 0)
     link_list.PrintLinkList()
     print("num of node: ", link_list.num_of_node)
 
